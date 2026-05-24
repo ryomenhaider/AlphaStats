@@ -23,7 +23,7 @@ def is_1d(x) -> bool:
     is_1d = isinstance(x, list) and not any(isinstance(item, list) for item in x)
     return is_1d
 
-def compare(x: list,y: list) -> bool:
+def compare(x: list,y: list) -> None:
     
     if is_1d(x) and is_1d(y):
         raise TypeError(f'Either {x} or {y} or both are not 1D')

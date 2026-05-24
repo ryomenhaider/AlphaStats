@@ -1,4 +1,5 @@
-from utils import _to_list, is_empty, is_1d
+from utils import _to_list, is_empty, is_1d, compare
+import math
 
 def mean(x) -> float:
 
@@ -104,8 +105,240 @@ def Skewness(x):
     
     if not isinstance(x, list):
         x = _to_list(x)
-        return variance(x)
+        return Skewness(x)
 
     is_empty(x)
 
+    mean_x = mean(x)
+    n = len(x)
+
+    _n = 0
+    for i in x:
+        _n_ = (i - mean_x) ** 3
+        _n += _n_
+    
+    nominator = (1/n) * _n
+
     _d = 0
+    for i in x:
+        _d_ = (i - mean_x) ** 2
+        _d += _d_
+    
+    dominator = ((1/n) * _d) ** (3/2)
+
+    return nominator / dominator
+
+def Kurtosis(x):
+
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return Kurtosis(x)
+
+    is_empty(x)
+    mean_x = mean(x)
+    n = len(x)
+
+    _n = 0  
+    for i in x:
+        _n_ = (i - mean_x) ** 4
+        _n += _n_
+    nominator = (1/n) * _n
+
+    _d = 0
+    for i in x:
+        _d_ = (i - mean_x) ** 2
+        _d += _d_
+    dominator = ((1/n) * _d) ** 2
+
+    return (nominator / dominator) - 3
+
+def count(x):
+    
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return count(x)
+
+    is_empty(x)
+
+    return len(x)
+
+def f_min(x):
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return f_min(x)
+
+    is_empty(x)
+
+    return min(x)
+
+def f_max(x):
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return f_max(x)
+
+    is_empty(x)
+
+    return max(x)
+
+def range(x):
+
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return Skewness(x)
+
+    is_empty(x)
+
+    range = f_max(x) - f_min(x)
+    
+    return range
+
+def covariance(x, y, type: str = 'population'):
+
+    compare(x, y)
+    
+    mean_x = mean(x)
+    mean_y = mean(y)
+    n = len(x)
+
+    if type.lower() == 'population':
+        _cov_p = 0
+        for i, j in zip(x,y):
+            _ = (i - mean_x) * (j - mean_y)
+            _cov_p += _
+        cov_p = (1/n) * _cov_p
+        return cov_p
+    
+    elif type.lower() == 'sample':
+        _cov_s = 0
+        for i, j in zip(x, y):
+            _ = (i - mean_x) * (j - mean_y)
+            _cov_s += _
+        cov_s = (1/(n-1)) * _cov_s
+        return cov_s
+
+# used in spearman corelation
+def rank(data):
+    indexed = sorted(enumerate(data), key=lambda x: x[1])
+    
+    ranks = [0] * len(data)
+    i = 0
+    while i < len(indexed):
+        j = i
+        while j < len(indexed) - 1 and indexed[j][1] == indexed[j+1][1]:
+            j += 1
+        avg = (i + j) / 2 + 1
+        for k in range(i, j+1):
+            ranks[indexed[k][0]] = avg
+        i = j + 1
+    
+    return ranks
+
+
+def corelation(x, y, type: str = 'pearson'):
+    
+    compare(x, y)
+
+    mean_x = mean(x)
+    mean_y = mean(y)
+    n = len(x)
+
+    if type.lower == 'pearson':
+
+        _nomin = 0
+        for i, j in zip(x, y):
+            _ = (i - mean_x) * (j - mean_y)
+            _nomin += _
+        
+        _denom1 = 0
+        for i in x:
+            _ = (i - mean_x) ** 2
+            _denom1 += _
+        _denom2 = 0
+        for i in y:
+            _ = (i - mean_y) ** 2
+            _denom2 += _
+        
+        denominator = (_denom1*_denom2) ** (1/2)
+        
+        return _nomin / denominator
+    
+    if type.lower == 'spearman':
+        
+        d = 0
+        for i, j in zip(x, y):
+            _ = rank(i) - rank(y)
+            d += _
+        d2 = d ** 2
+        nomi = 6 * d2
+
+        denom = n*((n**2) - 1 )
+        
+        return nomi / denom    
+
+def quantile(data, p, method='linear'):
+    x = sorted(data)
+    n = len(x)
+    
+    if n == 0:
+        raise ValueError("empty data")
+    if not 0 <= p <= 1:
+        raise ValueError("p must be in [0, 1]")
+    
+    if method == 'nearest':      
+        idx = math.ceil(p * n) - 1
+        return x[max(0, min(idx, n-1))]
+    
+    elif method == 'linear':     
+        h = p * (n - 1)
+    elif method == 'hazen':       
+        h = p * n + 0.5 - 1      
+    elif method == 'weibull':    
+        h = p * (n + 1) - 1
+    elif method == 'median_unbiased': 
+        h = p * (n + 1/3) + 1/3 - 1
+    elif method == 'normal_unbiased': 
+        h = p * (n + 0.25) + 0.375 - 1
+    else:
+        raise ValueError(f"unknown method: {method}")
+    
+    h = max(0, min(h, n - 1))
+    
+    lo = int(math.floor(h))
+    hi = int(math.ceil(h))
+    frac = h - lo
+    
+    if lo == hi:
+        return x[lo]
+    
+    return x[lo] * (1 - frac) + x[hi] * frac
+
+
+def quantiles(data, ps, method='linear'):
+    return [quantile(data, p, method) for p in ps]
+
+
+def iqr(data, method='linear'):
+    return quantile(data, 0.75, method) - quantile(data, 0.25, method)
+
+def percentile(data, k, method='linear'):
+    return quantile(data, k / 100, method)
