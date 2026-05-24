@@ -1,5 +1,18 @@
 import pandas as pd
 import numpy as np
+from typing import Callable
+
+def all_check(x, function: Callable):
+
+    if not is_1d(x):
+        print(f'{x} is not 1D')
+        raise ValueError
+    
+    if not isinstance(x, list):
+        x = _to_list(x)
+        return function(x)
+    
+    is_empty(x)
 
 def _to_list(n) -> list :
 

@@ -1,33 +1,18 @@
-from utils import _to_list, is_empty, is_1d, compare
+from utils import _to_list, is_empty, is_1d, compare, all_check
 import math
 
 def mean(x) -> float:
 
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
+    all_check(x, mean)
     
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return mean(x)
-    
-    is_empty(x)
     n = len(x)
     x_sum = sum(x)
     return x_sum / n
 
 def median(x):
     
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return median(x)
-    
-    is_empty(x)
-    
+    all_check(x, median)
+
     n = len(x)
     try:
 
@@ -41,15 +26,7 @@ def median(x):
 
 def mode(x):
 
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return mode(x)
-
-    is_empty(x)
+    all_check(x, mode)
 
     try:
         count = {}
@@ -69,15 +46,9 @@ def mode(x):
         print(f'Error: {e}')
 
 def variance(x):
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return variance(x)
 
-    is_empty(x)
+    all_check(x, variance)
+
 
     mean = mean(x)
     n = len(x)
@@ -99,15 +70,7 @@ def std(x):
 
 def Skewness(x):
 
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return Skewness(x)
-
-    is_empty(x)
+    all_check(x, Skewness)
 
     mean_x = mean(x)
     n = len(x)
@@ -130,15 +93,8 @@ def Skewness(x):
 
 def Kurtosis(x):
 
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return Kurtosis(x)
+    all_check(x, Kurtosis)
 
-    is_empty(x)
     mean_x = mean(x)
     n = len(x)
 
@@ -158,55 +114,23 @@ def Kurtosis(x):
 
 def count(x):
     
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return count(x)
-
-    is_empty(x)
+    all_check(x, count)
 
     return len(x)
 
 def f_min(x):
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return f_min(x)
-
-    is_empty(x)
+    all_check(x, f_min)
 
     return min(x)
 
 def f_max(x):
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return f_max(x)
-
-    is_empty(x)
+    all_check(x, f_max)
 
     return max(x)
 
 def range(x):
 
-    if not is_1d(x):
-        print(f'{x} is not 1D')
-        raise ValueError
-    
-    if not isinstance(x, list):
-        x = _to_list(x)
-        return Skewness(x)
-
-    is_empty(x)
+    all_check(x, range)
 
     range = f_max(x) - f_min(x)
     
@@ -296,6 +220,9 @@ def corelation(x, y, type: str = 'pearson'):
         return nomi / denom    
 
 def quantile(data, p, method='linear'):
+    
+    all_check(data, quantile)
+
     x = sorted(data)
     n = len(x)
     
