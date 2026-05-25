@@ -1,7 +1,14 @@
 import builtins
 import numpy as np
 import pytest
-from alphastats.descriptive import (
+import sys
+from pathlib import Path
+
+project_root = Path(__file__).resolve().parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+
+from alphastats.descriptive import (  # noqa: E402
     mean,
     median,
     mode,
@@ -129,7 +136,6 @@ class TestKurtosis:
     def test_uniform(self):
         data = [1, 2, 3, 4, 5]
         result = Kurtosis(data)
-        expected_kurt = np.array([1, 2, 3, 4, 5])
         assert result < 0
 
     def test_normal_like(self):
