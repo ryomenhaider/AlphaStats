@@ -16,18 +16,27 @@ def all_check(x, function: Callable):
 
 def _to_list(n) -> list :
 
-    if n not in [np.array, pd.Series]:
+    if n not in [np.array, pd.Series, tuple, dict, set]:
         raise TypeError(f'This function is for numpy array and pd series you provided {type(n)}')
     
     try:
 
-        if n == np.array:
+        if isinstance(n, np.array):
             arr = np.array(n)
             return arr.tolist()
         
-        elif n == pd.Series:
+        elif isinstance(n, pd.Series):
             arr = pd.Series(n)
             return arr.tolist()
+        
+        elif isinstance(n, dict):
+            return list(n.values())
+        
+        elif isinstance(n, tuple):
+            return list(n)
+        
+        elif isinstance(n, set):
+            return list(n)
     
     except Exception as e:
         print(f'Error: {e}')

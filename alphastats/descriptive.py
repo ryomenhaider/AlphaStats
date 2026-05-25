@@ -1,5 +1,4 @@
 from utils import _to_list, is_empty, is_1d, compare, all_check
-import math
 
 def mean(x) -> float:
 
@@ -232,7 +231,7 @@ def quantile(data, p, method='linear'):
         raise ValueError("p must be in [0, 1]")
     
     if method == 'nearest':      
-        idx = math.ceil(p * n) - 1
+        idx = (int(p * n) - 1) + 1
         return x[max(0, min(idx, n-1))]
     
     elif method == 'linear':     
@@ -250,8 +249,9 @@ def quantile(data, p, method='linear'):
     
     h = max(0, min(h, n - 1))
     
-    lo = int(math.floor(h))
-    hi = int(math.ceil(h))
+    lo = int(h)
+    hi = int(h) + 1
+    
     frac = h - lo
     
     if lo == hi:
@@ -269,3 +269,13 @@ def iqr(data, method='linear'):
 
 def percentile(data, k, method='linear'):
     return quantile(data, k / 100, method)
+
+
+def ln(x):
+    if x <= 0: raise ValueError('Math Domain Error')
+    n = 1000
+    return n * ((x ** (1/n)) - 1)
+
+pi = 22/7
+
+E = 2.718281828459045
