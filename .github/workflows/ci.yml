@@ -75,4 +75,4 @@ jobs:
         run: uv sync --frozen
 
       - name: Run Unit Tests
-        run: uv run pytest tests/
+        run: uv run pytest test/
