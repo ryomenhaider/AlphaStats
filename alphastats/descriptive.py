@@ -1,5 +1,5 @@
 import builtins
-from utils import _to_list, is_empty, is_1d, compare, all_check
+from alphastats.utils import compare, all_check
 
 def mean(x) -> float:
 
@@ -9,7 +9,7 @@ def mean(x) -> float:
     x_sum = sum(x)
     return x_sum / n
 
-def median(x):
+def median(x) -> float:
     all_check(x, median)
     n = len(x)
     sx = sorted(x)
@@ -17,7 +17,7 @@ def median(x):
         return sx[n // 2]
     return (sx[n // 2 - 1] + sx[n // 2]) / 2
 
-def mode(x):
+def mode(x) -> float:
 
     all_check(x, mode)
 
@@ -38,7 +38,7 @@ def mode(x):
     except Exception as e:
         print(f'Error: {e}')
 
-def variance(x):
+def variance(x) -> float:
     all_check(x, variance)
     mean_val = mean(x)
     n = len(x)
@@ -47,13 +47,13 @@ def variance(x):
         _var += (i - mean_val) ** 2
     return (1 / n) * _var
 
-def std(x):
+def std(x) -> float:
 
     var = variance(x)
     std = var ** (1/2)
     return std
 
-def Skewness(x):
+def Skewness(x) -> float:
 
     all_check(x, Skewness)
 
@@ -76,7 +76,7 @@ def Skewness(x):
 
     return nominator / dominator
 
-def Kurtosis(x):
+def Kurtosis(x) -> float:
 
     all_check(x, Kurtosis)
 
@@ -97,28 +97,28 @@ def Kurtosis(x):
 
     return (nominator / dominator) - 3
 
-def count(x):
+def count(x) -> float:
     
     all_check(x, count)
 
     return len(x)
 
-def f_min(x):
+def f_min(x) -> float:
     all_check(x, f_min)
 
     return min(x)
 
-def f_max(x):
+def f_max(x) -> float:
     all_check(x, f_max)
 
     return max(x)
 
-def range(x):
+def range(x) -> float:
     all_check(x, range)
     res = f_max(x) - f_min(x)
     return res
 
-def covariance(x, y, type: str = 'population'):
+def covariance(x, y, type: str = 'population') -> float:
 
     compare(x, y)
     
@@ -143,7 +143,8 @@ def covariance(x, y, type: str = 'population'):
         return cov_s
 
 # used in spearman corelation
-def rank(data):
+def rank(data) -> list[float]:
+
     indexed = sorted(enumerate(data), key=lambda x: x[1])
     
     ranks = [0] * len(data)
@@ -160,7 +161,8 @@ def rank(data):
     return ranks
 
 
-def corelation(x, y, type: str = 'pearson'):
+def corelation(x, y, type: str = 'pearson') -> float:
+    
     compare(x, y)
 
     if type.lower() == 'pearson':

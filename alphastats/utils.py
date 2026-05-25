@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 from typing import Callable
 
+
+
+
 def all_check(x, function: Callable):
 
     if not is_1d(x):
