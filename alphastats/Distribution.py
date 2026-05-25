@@ -5,10 +5,10 @@ def fit_distribution(data):
     pass
 
 def cdf():
-    pass
+    (1/2) * ()
 
-def pdf(x):
-    (1/(std(x) *((2*pi)**(1/2)))) * E ** ((-1/2) * ((x - mean(x)) / std(x)))
+def pdf(x):        # uh? 
+    return (1/(std(x) *((2*pi)**(1/2)))) * E ** ((-1/2) * ((x - mean(x)) / std(x)))
 
 def ppf():
     pass
@@ -18,6 +18,7 @@ def ks_test():
 
 def anderson_darling():
     pass
-    pass
+
 
 def normality_test():
+    pass
