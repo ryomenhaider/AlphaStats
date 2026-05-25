@@ -240,11 +240,11 @@ class TestCorelation:
         result = corelation(x, y, "pearson")
         assert result == pytest.approx(-1.0)
 
-    def test_no_correlation_pearson(self):
+    def test_constant_y_raises(self):
         x = [1, 2, 3, 4, 5]
         y = [5, 5, 5, 5, 5]
-        result = corelation(x, y, "pearson")
-        assert result == 0.0
+        with pytest.raises(ZeroDivisionError):
+            corelation(x, y, "pearson")
 
 
 class TestQuantile:

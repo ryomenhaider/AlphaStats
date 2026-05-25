@@ -1,3 +1,4 @@
+import builtins
 from utils import _to_list, is_empty, is_1d, compare, all_check
 
 def mean(x) -> float:
@@ -9,19 +10,12 @@ def mean(x) -> float:
     return x_sum / n
 
 def median(x):
-    
     all_check(x, median)
-
     n = len(x)
-    try:
-
-        if x % 2:
-            return ((x * (n/2)) + (x * (n/2 + 1)))/2 
-        else:
-            return (x * (n + 1))/2
-
-    except Exception as e:
-        print(f'Error: {e}')
+    sx = sorted(x)
+    if n % 2 == 1:
+        return sx[n // 2]
+    return (sx[n // 2 - 1] + sx[n // 2]) / 2
 
 def mode(x):
 
@@ -45,21 +39,13 @@ def mode(x):
         print(f'Error: {e}')
 
 def variance(x):
-
     all_check(x, variance)
-
-
-    mean = mean(x)
+    mean_val = mean(x)
     n = len(x)
-    
     _var = 0
     for i in x:
-        n = (i - mean) ** 2
-        _var += n
-
-    var = (1/n) * _var
-
-    return var
+        _var += (i - mean_val) ** 2
+    return (1 / n) * _var
 
 def std(x):
 
@@ -128,12 +114,9 @@ def f_max(x):
     return max(x)
 
 def range(x):
-
     all_check(x, range)
-
-    range = f_max(x) - f_min(x)
-    
-    return range
+    res = f_max(x) - f_min(x)
+    return res
 
 def covariance(x, y, type: str = 'population'):
 
@@ -170,7 +153,7 @@ def rank(data):
         while j < len(indexed) - 1 and indexed[j][1] == indexed[j+1][1]:
             j += 1
         avg = (i + j) / 2 + 1
-        for k in range(i, j+1):
+        for k in builtins.range(i, j+1):
             ranks[indexed[k][0]] = avg
         i = j + 1
     
@@ -178,45 +161,35 @@ def rank(data):
 
 
 def corelation(x, y, type: str = 'pearson'):
-    
     compare(x, y)
 
-    mean_x = mean(x)
-    mean_y = mean(y)
-    n = len(x)
-
-    if type.lower == 'pearson':
+    if type.lower() == 'pearson':
+        mean_x = mean(x)
+        mean_y = mean(y)
+        n = len(x)
 
         _nomin = 0
         for i, j in zip(x, y):
-            _ = (i - mean_x) * (j - mean_y)
-            _nomin += _
-        
-        _denom1 = 0
-        for i in x:
-            _ = (i - mean_x) ** 2
-            _denom1 += _
-        _denom2 = 0
-        for i in y:
-            _ = (i - mean_y) ** 2
-            _denom2 += _
-        
-        denominator = (_denom1*_denom2) ** (1/2)
-        
-        return _nomin / denominator
-    
-    if type.lower == 'spearman':
-        
-        d = 0
-        for i, j in zip(x, y):
-            _ = rank(i) - rank(y)
-            d += _
-        d2 = d ** 2
-        nomi = 6 * d2
+            _nomin += (i - mean_x) * (j - mean_y)
 
-        denom = n*((n**2) - 1 )
-        
-        return nomi / denom    
+        _denom1 = sum((i - mean_x) ** 2 for i in x)
+        _denom2 = sum((i - mean_y) ** 2 for i in y)
+
+        denominator = (_denom1 * _denom2) ** (1 / 2)
+
+        return _nomin / denominator
+
+    if type.lower() == 'spearman':
+        rx = rank(x)
+        ry = rank(y)
+
+        d2 = sum((ri - rj) ** 2 for ri, rj in zip(rx, ry))
+        n = len(x)
+
+        nomi = 6 * d2
+        denom = n * ((n ** 2) - 1)
+
+        return 1 - (nomi / denom)    
 
 def quantile(data, p, method='linear'):
     
@@ -254,7 +227,7 @@ def quantile(data, p, method='linear'):
     
     frac = h - lo
     
-    if lo == hi:
+    if lo == hi or hi >= n:
         return x[lo]
     
     return x[lo] * (1 - frac) + x[hi] * frac
