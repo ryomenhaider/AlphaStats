@@ -1,6 +1,5 @@
-import pandas as pd
 import numpy as np
-from typing import Callable
+from typing import Callable, Any, List
 
 
 def all_check(x, function: Callable):
@@ -9,33 +8,49 @@ def all_check(x, function: Callable):
         print(f"{x} is not 1D")
         raise ValueError
 
-    if not isinstance(x, list):
+    if not isinstance(x, List):
         x = _to_list(x)
         return function(x)
 
     is_empty(x)
 
 
-def _to_list(n) -> list:
+def _to_list(n: Any) -> List:
 
-    if type(n) not in [np.ndarray, pd.Series, tuple, dict, set]:
-        raise TypeError(
-            f"This function is for numpy array and pd series you provided {type(n)}"
-        )
+    if not isinstance(n, list):
+        print(f"{n} is {type(n)}, not a list trying to convert it to list")
 
-    if isinstance(n, np.ndarray):
-        return n.tolist()
+        try:
+            if isinstance(n, np.ndarray):
+                print(f"{n} is a np array trying to convert it to a list")
+                n_l = n.tolist()
 
-    if isinstance(n, pd.Series):
-        return n.tolist()
+                if isinstance(n_l, list):
+                    print("conversion successful")
+                    return n_l
+                else:
+                    print("Conversion failed")
+                    raise RuntimeError(
+                        "NumPy array tolist() did not return a list."
+                    )  # Fixed
 
-    if isinstance(n, dict):
-        return list(n.values())
+            else:
+                print(f"{n} has type {type(n)}, not list, trying to convert it to list")
+                n_l = list(n)
 
-    if isinstance(n, (tuple, set)):
-        return list(n)
+                if isinstance(n_l, list):
+                    print("conversion successful")
+                    return n_l
+                else:
+                    print("Conversion failed")
+                    raise RuntimeError(
+                        "Standard list conversion did not return a list."
+                    )  # Fixed
 
-    raise TypeError(f"unexpected type: {type(n)}")
+        except Exception as e:
+            raise RuntimeError(f"Conversion failed, Error: {e}")
+    else:
+        return n
 
 
 def is_1d(x) -> bool:
