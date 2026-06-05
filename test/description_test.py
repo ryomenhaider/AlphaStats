@@ -8,21 +8,30 @@ project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from alphastats.descriptive import (  # noqa: E402
+from alphastats.descriptive.central import (  # noqa: E402
     mean,
     median,
     mode,
-    variance,
-    std,
+)
+
+from alphastats.descriptive.association import (  # noqa: E402
+    corelation,
+    covariance,
+    rank,
+)
+
+from alphastats.descriptive.shape import (  # noqa: E402
     Skewness,
     Kurtosis,
+)
+
+from alphastats.descriptive.spread import (  # noqa: E402
+    variance,
+    std,
     count,
-    f_min,
     f_max,
-    range as _range,
-    covariance,
-    corelation,
-    rank,
+    f_min,
+    range,
     quantile,
     quantiles,
     iqr,
@@ -179,13 +188,13 @@ class TestFMax:
 
 class TestRange:
     def test_basic(self):
-        assert _range([3, 1, 4, 1, 5]) == 4
+        assert range([3, 1, 4, 1, 5]) == 4
 
     def test_all_same(self):
-        assert _range([5, 5, 5]) == 0
+        assert range([5, 5, 5]) == 0
 
     def test_negative(self):
-        assert _range([-10, 0, 10]) == 20
+        assert range([-10, 0, 10]) == 20
 
 
 class TestCovariance:
