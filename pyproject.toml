@@ -1,5 +1,5 @@
 [project]
-name = "alphastats"
+name = "statitude"
 version = "0.1.0"
 description = "A simple statistics python library"
 readme = "README.md"
@@ -29,11 +29,11 @@ classifiers = [
 
 
 [project.urls]
-Homepage = "https://github.com/yourname/statslib"
-Documentation = "https://statslib.readthedocs.io"
-Repository = "https://github.com/yourname/statslib"
-"Bug Tracker" = "https://github.com/yourname/statslib/issues"
+Homepage = "https://github.com/yourname/statitude"
+Documentation = "https://statitude.readthedocs.io"
+Repository = "https://github.com/yourname/statitude"
+"Bug Tracker" = "https://github.com/yourname/statitude/issues"
 
 [tool.setuptools.packages.find]
-include = ["alphastats*", "models*"]
+include = ["statitude*", "models*"]
 

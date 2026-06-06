@@ -8,24 +8,24 @@ project_root = Path(__file__).resolve().parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from alphastats.descriptive.central import (  # noqa: E402
+from statitude.descriptive.central import (  # noqa: E402
     mean,
     median,
     mode,
 )
 
-from alphastats.descriptive.association import (  # noqa: E402
+from statitude.descriptive.association import (  # noqa: E402
     corelation,
     covariance,
     rank,
 )
 
-from alphastats.descriptive.shape import (  # noqa: E402
+from statitude.descriptive.shape import (  # noqa: E402
     Skewness,
     Kurtosis,
 )
 
-from alphastats.descriptive.spread import (  # noqa: E402
+from statitude.descriptive.spread import (  # noqa: E402
     variance,
     std,
     count,

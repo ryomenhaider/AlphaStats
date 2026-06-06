@@ -1,4 +1,4 @@
-from alphastats.utils import all_check
+from statitude.utils import all_check
 
 
 def mean(x) -> float:

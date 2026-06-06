@@ -1,5 +1,5 @@
-from alphastats.descriptive.central import mean, median, mode
-from alphastats.descriptive.spread import (
+from statitude.descriptive.central import mean, median, mode
+from statitude.descriptive.spread import (
     variance,
     std,
     count,
@@ -14,8 +14,8 @@ from alphastats.descriptive.spread import (
     pi,
     E,
 )
-from alphastats.descriptive.shape import Skewness, Kurtosis
-from alphastats.descriptive.association import covariance, rank, corelation
+from statitude.descriptive.shape import Skewness, Kurtosis
+from statitude.descriptive.association import covariance, rank, corelation
 
 __all__ = [
     "mean",

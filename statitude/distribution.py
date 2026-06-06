@@ -1,5 +1,5 @@
-from alphastats.descriptive import mean, std, pi, E, f_max, f_min
-from alphastats.utils import all_check
+from statitude.descriptive import mean, std, pi, E, f_max, f_min
+from statitude.utils import all_check
 
 
 def fit_distribution(data):

@@ -1,18 +1,18 @@
-class StatslibError(Exception):
+class StatitudeError(Exception):
     """Base exception."""
 
 
-class InsufficientDataError(StatslibError):
+class InsufficientDataError(StatitudeError):
     """Fewer observations than the method requires."""
 
 
-class InvalidInputError(StatslibError):
+class InvalidInputError(StatitudeError):
     """Wrong shape, type, or value."""
 
 
-class ConvergenceError(StatslibError):
+class ConvergenceError(StatitudeError):
     """Iterative method failed to converge."""
 
 
-class MissingDependencyError(StatslibError):
+class MissingDependencyError(StatitudeError):
     """Optional dependency not installed."""

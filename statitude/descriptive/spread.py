@@ -1,5 +1,5 @@
-from alphastats.descriptive.central import mean
-from alphastats.utils import all_check
+from statitude.descriptive.central import mean
+from statitude.utils import all_check
 
 
 def variance(x) -> float:

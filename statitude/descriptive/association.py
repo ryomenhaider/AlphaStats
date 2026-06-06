@@ -1,5 +1,5 @@
-from alphastats.descriptive.central import mean
-from alphastats.utils import compare
+from statitude.descriptive.central import mean
+from statitude.utils import compare
 import builtins
 
 
