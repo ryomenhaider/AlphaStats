@@ -1,10 +1,11 @@
 [project]
-name = "alphastats"
+name = "statitude"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple statistics python library"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "build>=1.5.0",
     "mypy>=2.1.0",
     "numpy>=2.4.6",
     "pandas>=3.0.3",
@@ -12,4 +13,27 @@ dependencies = [
     "pyright>=1.1.409",
     "pytest>=9.0.3",
     "ruff>=0.15.14",
+    "twine>=6.2.0",
 ]
+keywords = ["statistics", "data science", "hypothesis testing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/yourname/statitude"
+Documentation = "https://statitude.readthedocs.io"
+Repository = "https://github.com/yourname/statitude"
+"Bug Tracker" = "https://github.com/yourname/statitude/issues"
+
+[tool.setuptools.packages.find]
+include = ["statitude*", "models*"]
+
